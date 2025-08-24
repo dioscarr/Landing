@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
+import { Briefcase } from 'lucide-react';
 
 const Role = ({ role, org, period, bullets, onClick }) => (
   <button
@@ -61,7 +62,7 @@ const Experience = () => {
           <Role key={i} {...r} onClick={() => setActive(r)} />
         ))}
       </div>
-      <Modal open={Boolean(active)} onClose={() => setActive(null)} title={active ? `${active.role} · ${active.org}` : ''}>
+  <Modal open={Boolean(active)} onClose={() => setActive(null)} title={active ? (<span className="inline-flex items-center gap-2"><Briefcase size={16}/> {active.role} · {active.org}</span>) : ''}>
         {active && (
           <div className="space-y-2">
             <p className="text-sm text-white/70">{active.period}</p>

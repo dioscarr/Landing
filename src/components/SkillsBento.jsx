@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import Modal from './Modal';
+import { Sparkles } from 'lucide-react';
 
 const Card = ({ title, items, onClick }) => (
   <button
@@ -32,7 +33,7 @@ const SkillsBento = () => {
           <Card key={i} title={s.title} items={s.items} onClick={() => setActive(s)} />
         ))}
       </div>
-      <Modal open={Boolean(active)} onClose={() => setActive(null)} title={active?.title}>
+  <Modal open={Boolean(active)} onClose={() => setActive(null)} title={<span className="inline-flex items-center gap-2"><Sparkles size={16}/> {active?.title}</span>}>
         {Boolean(activeTags.length) && (
           <div className="flex flex-wrap gap-2">
             {activeTags.map((t, i) => (
