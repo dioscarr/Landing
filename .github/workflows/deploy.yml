@@ -41,6 +41,13 @@ jobs:
           NODE_ENV=production npm run build
           cp dist/index.html dist/404.html
 
+      - name: Verify build embeds Supabase envs
+        run: |
+          echo '--- GREP SUPABASE URL IN DIST ---'
+          grep -R "facdwhskwtcfixmtqsvk.supabase.co" -n dist || true
+          echo '--- GREP VITE VAR NAMES IN JS (should be empty) ---'
+          grep -R "VITE_SUPABASE_URL\|VITE_SUPABASE_ANON_KEY" -n dist || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
