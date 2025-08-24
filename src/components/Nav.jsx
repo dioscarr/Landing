@@ -7,16 +7,17 @@ const Nav = () => {
   const navigate = useNavigate();
   const session = useSession();
 
-  const handleLogin = async () => {
-    // Simple email-based magic link for demo; replace with OAuth if preferred.
-    const email = window.prompt('Enter your email for a magic-link login:');
-    if (!email) return;
-    const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + (import.meta.env.BASE_URL || '/') + 'dashboard' } });
+  const handleSignIn = async () => {
+    // Third-party OAuth authentication with GitHub
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: window.location.origin + (import.meta.env.BASE_URL || '/') + 'dashboard'
+      }
+    });
     if (error) {
-      alert(error.message);
-      return;
+      alert('Sign in error: ' + error.message);
     }
-    alert('Check your email for a login link. After logging in, you will be redirected to the dashboard.');
   };
 
   const gotoDashboard = () => navigate('/dashboard');
@@ -33,7 +34,7 @@ const Nav = () => {
           {session ? (
             <button onClick={gotoDashboard} className="ml-2 rounded bg-white/10 border border-white/20 px-3 py-1.5 hover:bg-white/20">Dashboard</button>
           ) : (
-            <button onClick={handleLogin} className="ml-2 rounded bg-blue-600 text-white px-3 py-1.5 hover:bg-blue-500">Login</button>
+            <button onClick={handleSignIn} className="ml-2 rounded bg-blue-600 text-white px-3 py-1.5 hover:bg-blue-500">Sign In</button>
           )}
         </div>
       </nav>
