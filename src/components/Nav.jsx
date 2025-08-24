@@ -8,7 +8,7 @@ const Nav = () => {
   const session = useSession();
 
   const handleLogin = async () => {
-    // Simple email-based magic link for demo; replace with OAuth if preferred.
+    // Email magic link (existing)
     const email = window.prompt('Enter your email for a magic-link login:');
     if (!email) return;
     const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + (import.meta.env.BASE_URL || '/') + 'dashboard' } });
@@ -17,6 +17,19 @@ const Nav = () => {
       return;
     }
     alert('Check your email for a login link. After logging in, you will be redirected to the dashboard.');
+  };
+
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + (import.meta.env.BASE_URL || '/') + 'dashboard',
+      },
+    });
+    if (error) {
+      alert(error.message);
+    }
+    // Supabase will redirect automatically
   };
 
   const gotoDashboard = () => navigate('/dashboard');
@@ -33,7 +46,10 @@ const Nav = () => {
           {session ? (
             <button onClick={gotoDashboard} className="ml-2 rounded bg-white/10 border border-white/20 px-3 py-1.5 hover:bg-white/20">Dashboard</button>
           ) : (
-            <button onClick={handleLogin} className="ml-2 rounded bg-blue-600 text-white px-3 py-1.5 hover:bg-blue-500">Login</button>
+            <>
+              <button onClick={handleLogin} className="ml-2 rounded bg-blue-600 text-white px-3 py-1.5 hover:bg-blue-500">Login with Email</button>
+              <button onClick={handleGoogleLogin} className="ml-2 rounded bg-red-600 text-white px-3 py-1.5 hover:bg-red-500">Sign in with Google</button>
+            </>
           )}
         </div>
       </nav>
