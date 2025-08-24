@@ -38,7 +38,7 @@ jobs:
 
       - name: Build
         run: |
-          npm run build
+          NODE_ENV=production npm run build
           cp dist/index.html dist/404.html
 
       - name: Upload artifact

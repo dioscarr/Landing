@@ -1,11 +1,11 @@
-# My Supabase App
+# Landing
 
-This is a React application created using Vite and integrated with Supabase.
+Vite + React app integrated with Supabase and deployed to GitHub Pages.
 
 ## Project Structure
 
 ```
-my-supabase-app
+.
 ├── src
 │   ├── App.jsx          # Main application component
 │   ├── main.jsx         # Entry point of the React application
@@ -16,6 +16,8 @@ my-supabase-app
 ├── package.json         # npm configuration file
 ├── vite.config.js       # Vite configuration settings
 ├── README.md            # Project documentation
+├── .env                 # Local dev env (gitignored)
+├── .env.production      # Production env used by CI (committed)
 └── index.html           # Main HTML file for the application
 ```
 
@@ -24,7 +26,7 @@ my-supabase-app
 1. Clone the repository:
    ```
    git clone <repository-url>
-   cd my-supabase-app
+   cd Landing
    ```
 
 2. Install dependencies:
@@ -37,7 +39,11 @@ my-supabase-app
    npm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:3000` to see the application in action.
+4. Open your browser and navigate to `http://localhost:3000/Landing/`.
+
+Env vars:
+- Local dev: put values in `.env`
+- CI/Pages: values come from `.env.production` or GitHub Actions Variables
 
 ## Usage
 
