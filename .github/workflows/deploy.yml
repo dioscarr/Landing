@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   build:
+  environment: github-pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,6 +35,14 @@ jobs:
             echo "VITE_SUPABASE_ANON_KEY=${{ vars.VITE_SUPABASE_ANON_KEY || secrets.VITE_SUPABASE_ANON_KEY }}"
           } > .env.production
 
+      - name: Validate env file
+        run: |
+          echo "--- .env.production (masked) ---"
+          awk -F= 'BEGIN{OFS="="} $1=="VITE_SUPABASE_ANON_KEY"{print $1, substr($2,1,6)"... (len="length($2)")"; next} {print $0}' .env.production
+          test -s .env.production || (echo "ERROR: .env.production missing or empty" && exit 1)
+          grep -q '^VITE_SUPABASE_URL=' .env.production || (echo "ERROR: VITE_SUPABASE_URL missing" && exit 1)
+          grep -q '^VITE_SUPABASE_ANON_KEY=' .env.production || (echo "ERROR: VITE_SUPABASE_ANON_KEY missing" && exit 1)
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
@@ -49,9 +58,9 @@ jobs:
       - name: Verify build embeds Supabase envs
         run: |
           echo '--- GREP SUPABASE URL IN DIST ---'
-          grep -R "facdwhskwtcfixmtqsvk.supabase.co" -n dist || true
+          grep -R "supabase.co" -n dist
           echo '--- GREP VITE VAR NAMES IN JS (should be empty) ---'
-          grep -R "VITE_SUPABASE_URL\|VITE_SUPABASE_ANON_KEY" -n dist || true
+          ! grep -R "VITE_SUPABASE_URL\\|VITE_SUPABASE_ANON_KEY" -n dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
