@@ -17,9 +17,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
-      VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,7 +35,8 @@ jobs:
 
       - name: Build
         run: |
-          NODE_ENV=production npm run build
+          echo "Using Vite mode=production (loads .env.production)"
+          npm run build -- --mode production
           cp dist/index.html dist/404.html
 
       - name: Verify build embeds Supabase envs
