@@ -29,17 +29,15 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: my-supabase-app/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Install deps
-        working-directory: my-supabase-app
         run: npm ci
 
       - name: Build
-        working-directory: my-supabase-app
         run: |
           npm run build
           cp dist/index.html dist/404.html
@@ -47,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: my-supabase-app/dist
+          path: dist
 
   deploy:
     environment:
