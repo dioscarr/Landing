@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import SkillsBento from './components/SkillsBento';
 import Projects from './components/Projects';
 import Experience from './components/Experience';
+import Education from './components/Education';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 
@@ -22,6 +23,10 @@ const App = () => {
         </section>
         <section id="experience" className="py-16">
           <Experience />
+        </section>
+        <section id="education" className="py-16">
+          <h2 className="text-2xl font-semibold mb-4">Education</h2>
+          <Education />
         </section>
         <section id="contact" className="py-16">
           <h2 className="text-2xl font-semibold mb-4">Contact</h2>
