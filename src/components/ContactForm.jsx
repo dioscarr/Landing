@@ -41,7 +41,7 @@ const ContactForm = () => {
   return (
     <form className="w-full max-w-md" onSubmit={handleSubmit}>
       {!isConfigured && (
-        <p className="text-sm mb-3 text-yellow-400">Supabase env vars are missing. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.</p>
+  <p className="text-sm mb-3 text-yellow-400">Supabase env vars are missing. Set your Supabase URL and anon key.</p>
       )}
       <div className="mb-3">
         <label className="block text-sm font-medium" htmlFor="name">Name</label>

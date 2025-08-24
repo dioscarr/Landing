@@ -5,7 +5,7 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 	// eslint-disable-next-line no-console
-	console.warn('Supabase env vars missing. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY');
+	console.warn('Supabase env vars missing. Provide Supabase URL and anon key environment variables.');
 }
 
 export const supabase = createClient(SUPABASE_URL || '', SUPABASE_ANON_KEY || '');
