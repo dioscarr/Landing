@@ -6,7 +6,7 @@ const Role = ({ role, org, period, bullets, onClick }) => (
   <button
     type="button"
     onClick={onClick}
-    className="text-left rounded-xl border border-white/10 p-4 bg-white/5 hover:bg-white/10 transition"
+    className="w-full text-left rounded-xl border border-white/10 p-6 bg-white/5 hover:bg-white/10 transition"
   >
     <h3 className="font-semibold">{role} · {org}</h3>
     <p className="text-sm opacity-70 mb-2">{period}</p>
@@ -57,10 +57,12 @@ const Experience = () => {
 
   return (
     <>
-      <div className="space-y-4">
-        {roles.map((r, i) => (
-          <Role key={i} {...r} onClick={() => setActive(r)} />
-        ))}
+      <div className="py-6">
+        <div className="flex flex-col gap-6">
+          {roles.map((r, i) => (
+            <Role key={i} {...r} onClick={() => setActive(r)} />
+          ))}
+        </div>
       </div>
   <Modal open={Boolean(active)} onClose={() => setActive(null)} title={active ? (<span className="inline-flex items-center gap-2"><Briefcase size={16}/> {active.role} · {active.org}</span>) : ''}>
         {active && (
