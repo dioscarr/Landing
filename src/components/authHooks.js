@@ -1,23 +1,11 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { useMemo } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
+// Returns: undefined => loading, null => not authed, object => authed (user)
 export const useSession = () => {
-  const [session, setSession] = useState(undefined);
-
-  useEffect(() => {
-    let mounted = true;
-    supabase.auth.getSession().then(({ data }) => {
-      if (!mounted) return;
-      setSession(data.session ?? null);
-    });
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
-      setSession(sess ?? null);
-    });
-    return () => {
-      mounted = false;
-      sub.subscription?.unsubscribe?.();
-    };
-  }, []);
-
-  return session; // undefined => loading, null => not authed, object => authed
+  const { isLoading, isAuthenticated, user } = useAuth0();
+  return useMemo(() => {
+    if (isLoading) return undefined;
+    return isAuthenticated ? user : null;
+  }, [isLoading, isAuthenticated, user]);
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const links = [
   { label: 'Portfolio', href: 'https://dioscarr.github.io/Landing/' },
@@ -8,9 +8,9 @@ const links = [
 ];
 
 const Dashboard = () => {
+  const { logout } = useAuth0();
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    window.location.href = import.meta.env.BASE_URL || '/';
+    logout({ logoutParams: { returnTo: window.location.origin + (import.meta.env.BASE_URL || '/') } });
   };
 
   return (
