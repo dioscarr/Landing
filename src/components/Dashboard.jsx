@@ -2,12 +2,6 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import RepoGrid from './RepoGrid';
 
-const links = [
-  { label: 'Portfolio', href: 'https://dioscarr.github.io/Landing/' },
-  { label: 'Resume', href: 'https://dioscarr.github.io/RodriguezDioscar/' },
-  // add more repo pages here as needed
-];
-
 const Dashboard = () => {
   const { logout } = useAuth0();
   const handleSignOut = async () => {
@@ -23,23 +17,6 @@ const Dashboard = () => {
         </nav>
       </header>
       <main className="container mx-auto px-4 py-10">
-        <p className="text-white/80 mb-4">Main navigation menu to GitHub Pages repos:</p>
-        <ul className="divide-y divide-white/10 rounded-xl border border-white/10 bg-white/5">
-          {links.map((l, i) => (
-            <li key={i}>
-              <a
-                href={l.href}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-between px-4 py-3 hover:bg-white/10"
-              >
-                <span>{l.label}</span>
-                <span className="text-xs text-white/50">opens ↗</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-
         <RepoGrid username={import.meta.env.VITE_GITHUB_USERNAME || 'dioscarr'} />
       </main>
     </div>
