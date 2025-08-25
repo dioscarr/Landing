@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import RepoGrid from './RepoGrid';
 
 const links = [
   { label: 'Portfolio', href: 'https://dioscarr.github.io/Landing/' },
@@ -38,6 +39,8 @@ const Dashboard = () => {
             </li>
           ))}
         </ul>
+
+        <RepoGrid username={import.meta.env.VITE_GITHUB_USERNAME || 'dioscarr'} />
       </main>
     </div>
   );
