@@ -32,10 +32,14 @@ export default function RepoGrid({ username, perPage = 100 }) {
     const ac = new AbortController();
     setLoading(true);
     setError(null);
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
+    const headers = {
+      Accept: 'application/vnd.github+json',
+    };
+    if (token) headers.Authorization = `token ${token}`;
+
     fetch(`${API_BASE}/users/${encodeURIComponent(username)}/repos?per_page=${perPage}&sort=updated`, {
-      headers: {
-        Accept: 'application/vnd.github+json',
-      },
+      headers,
       signal: ac.signal,
     })
       .then(async (res) => {
