@@ -143,7 +143,15 @@ export default function RepoGrid({ username, perPage = 100 }) {
                 )}
                 <span>Updated {timeAgo(r.updated_at)}</span>
                 {r.homepage && (
-                  <span className="px-2 py-1 rounded bg-green-500/20 text-green-300 border border-green-500/30">Homepage ↗</span>
+                  <a
+                    href={r.homepage.startsWith('http') ? r.homepage : `https://${r.homepage}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-2 py-1 rounded bg-green-500/20 text-green-300 border border-green-500/30"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Homepage ↗
+                  </a>
                 )}
               </div>
             </a>
